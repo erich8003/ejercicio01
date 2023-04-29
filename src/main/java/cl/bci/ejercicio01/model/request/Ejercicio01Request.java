@@ -1,4 +1,4 @@
-package cl.bci.ejercicio01.request;
+package cl.bci.ejercicio01.model.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,9 +24,9 @@ public class Ejercicio01Request {
     private String password;
 
     @JsonProperty("phones")
-    private Phones[] phones;
+    private PhonesRequest[] phones;
 
-    public Ejercicio01Request(String name, String email, String password, Phones[] phones) {
+    public Ejercicio01Request(String name, String email, String password, PhonesRequest[] phones) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -57,11 +57,11 @@ public class Ejercicio01Request {
         this.password = password;
     }
 
-    public Phones[] getPhone() {
+    public PhonesRequest[] getPhone() {
         return phones;
     }
 
-    public void setPhone(Phones[] phones) {
+    public void setPhone(PhonesRequest[] phones) {
         this.phones = phones;
     }
 }

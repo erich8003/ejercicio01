@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -35,12 +36,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name ="number")
-    private long number;
-    @Column(name ="citycode")
-    private int cityCode;
-    @Column(name ="countrycode")
-    private String countryCode;
+   /* @OneToMany(mappedBy="user")
+    private Set<Phones> phones;*/
+
 
     @Column(name ="active")
     private boolean active;
@@ -112,29 +110,7 @@ public class User {
         this.password = password;
     }
 
-    public long getNumber() {
-        return number;
-    }
 
-    public void setNumber(long number) {
-        this.number = number;
-    }
-
-    public int getCityCode() {
-        return cityCode;
-    }
-
-    public void setCityCode(int cityCode) {
-        this.cityCode = cityCode;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
 
 
 }

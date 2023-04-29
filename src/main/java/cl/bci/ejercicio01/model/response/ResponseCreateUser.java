@@ -1,4 +1,4 @@
-package cl.bci.ejercicio01.response;
+package cl.bci.ejercicio01.model.response;
 
 import java.util.Date;
 

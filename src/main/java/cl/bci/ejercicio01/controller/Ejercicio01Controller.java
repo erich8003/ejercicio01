@@ -1,8 +1,8 @@
 package cl.bci.ejercicio01.controller;
 
 import cl.bci.ejercicio01.domain.User;
-import cl.bci.ejercicio01.request.Ejercicio01Request;
-import cl.bci.ejercicio01.response.ResponseCreateUser;
+import cl.bci.ejercicio01.model.request.Ejercicio01Request;
+import cl.bci.ejercicio01.model.response.ResponseCreateUser;
 import cl.bci.ejercicio01.service.Ejercicio01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -27,7 +27,7 @@ public class Ejercicio01Controller {
         User user = service.createUser(request);
         responseCreateUser.setCreated(user.getCreated());
         responseCreateUser.setId(user.getId().toString());
-        responseCreateUser.setToken("token");
+        responseCreateUser.setToken(service.createToken());
         responseCreateUser.setLastLogin(user.getLastLogin());
         return new ResponseEntity<>(responseCreateUser,HttpStatus.CREATED);
     }

@@ -1,8 +1,8 @@
-package cl.bci.ejercicio01.request;
+package cl.bci.ejercicio01.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Phones {
+public class PhonesRequest {
     @JsonProperty("number")
     private long phonenumber;
     @JsonProperty("citycode")
@@ -11,7 +11,7 @@ public class Phones {
     private String countrycode;
 
 
-    public Phones(long phoneNumber, int cityCode, String countryCode) {
+    public PhonesRequest(long phoneNumber, int cityCode, String countryCode) {
         this.phonenumber = phoneNumber;
         this.citycode = cityCode;
         this.countrycode = countryCode;
