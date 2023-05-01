@@ -22,7 +22,7 @@ public class Ejercicio01Controller {
     Ejercicio01Service service;
 
     @PostMapping(value = "/sign-up",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<ResponseCreateUser>  create(@Valid @RequestBody Ejercicio01Request request) {
+    public @ResponseBody ResponseEntity<ResponseCreateUser>  create(@Valid @RequestBody Ejercicio01Request request) throws Exception {
         ResponseCreateUser responseCreateUser = new ResponseCreateUser();
         User user = service.createUser(request);
         responseCreateUser.setCreated(user.getCreated());

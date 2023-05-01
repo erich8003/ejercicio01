@@ -3,6 +3,7 @@ package cl.bci.ejercicio01.service;
 import cl.bci.ejercicio01.config.JWebToken;
 import cl.bci.ejercicio01.domain.Phones;
 import cl.bci.ejercicio01.domain.User;
+import cl.bci.ejercicio01.exception.DuplicatedUserException;
 import cl.bci.ejercicio01.model.request.PhonesRequest;
 import cl.bci.ejercicio01.repository.PhonesRepository;
 import cl.bci.ejercicio01.repository.UserRepository;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class Ejercicio01Service {
@@ -25,11 +27,19 @@ public class Ejercicio01Service {
 
     private static final int EXPIRY_DAYS = 90;
 
-    public User createUser(Ejercicio01Request request){
+    public User createUser(Ejercicio01Request request) throws DuplicatedUserException {
 
         PhonesRepository phonesRepo = context.getBean(PhonesRepository.class);
+
        
         UserRepository userRepo = context.getBean(UserRepository.class);
+
+        List<User> existUser  = userRepo.findByEmail(request.getEmail());
+        if(existUser.size()>0){
+            throw new DuplicatedUserException("El usuario ya existe");
+        }
+
+
         User user = new User();
         user.setEmail(request.getEmail());
         user.setName(request.getName());
