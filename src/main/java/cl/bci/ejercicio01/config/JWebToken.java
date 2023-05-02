@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import cl.bci.ejercicio01.model.request.Ejercicio01Request;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,11 +27,13 @@ public class JWebToken {
 
     private static final String SECRET_KEY = "FREE_MASON"; //@TODO Add Signature here
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-    private static final String ISSUER = "mason.metamug.net";
+    private static final String ISSUER = "test.bci.cl";
     private static final String JWT_HEADER = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
     private JSONObject payload = new JSONObject();
     private String signature;
     private String encodedHeader;
+
+    private static final int EXPIRY_DAYS = 90;
 
     private JWebToken() {
         encodedHeader = encode(new JSONObject(JWT_HEADER));
@@ -136,6 +140,25 @@ public class JWebToken {
             Logger.getLogger(JWebToken.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             return null;
         }
+    }
+
+    public static String createToken(Ejercicio01Request request){
+
+        JSONObject jwtPayload = new JSONObject();
+        jwtPayload.put("status", 0);
+
+        JSONArray audArray = new JSONArray();
+        audArray.put("admin");
+        jwtPayload.put("sub", request.getEmail());
+
+        jwtPayload.put("aud", audArray);
+        LocalDateTime ldt = LocalDateTime.now().plusDays(EXPIRY_DAYS);
+        jwtPayload.put("exp", ldt.toEpochSecond(ZoneOffset.UTC)); //this needs to be configured
+
+        String token = new JWebToken(jwtPayload).toString();
+
+        return token;
+
     }
 
 }

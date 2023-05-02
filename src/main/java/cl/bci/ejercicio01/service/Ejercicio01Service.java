@@ -25,7 +25,8 @@ public class Ejercicio01Service {
     @Autowired
     private ApplicationContext context;
 
-    private static final int EXPIRY_DAYS = 90;
+
+
 
     public User createUser(Ejercicio01Request request) throws DuplicatedUserException {
 
@@ -46,6 +47,7 @@ public class Ejercicio01Service {
         user.setCreated(new Date());
         user.setActive(Boolean.TRUE);
         user.setPassword(Base64.getEncoder().encodeToString(request.getPassword().getBytes()));
+        user.setToken(JWebToken.createToken(request));
         User savedUser = userRepo.save(user);
 
         for (PhonesRequest strTemp : request.getPhone()){
@@ -57,29 +59,8 @@ public class Ejercicio01Service {
 
         }
 
-        /* Phones phones = new Phones();
-        phones.setCitycode();
-        phones.setCountrycode();
-        phones.setPhonenumber();*/
         return savedUser;
     }
 
-    public String createToken(){
 
-        JSONObject jwtPayload = new JSONObject();
-        jwtPayload.put("status", 0);
-
-        JSONArray audArray = new JSONArray();
-        audArray.put("admin");
-        jwtPayload.put("sub", "John");
-
-        jwtPayload.put("aud", audArray);
-        LocalDateTime ldt = LocalDateTime.now().plusDays(EXPIRY_DAYS);
-        jwtPayload.put("exp", ldt.toEpochSecond(ZoneOffset.UTC)); //this needs to be configured
-
-        String token = new JWebToken(jwtPayload).toString();
-
-        return token;
-
-    }
 }

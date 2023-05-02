@@ -27,7 +27,7 @@ public class Ejercicio01Controller {
         User user = service.createUser(request);
         responseCreateUser.setCreated(user.getCreated());
         responseCreateUser.setId(user.getId().toString());
-        responseCreateUser.setToken(service.createToken());
+        responseCreateUser.setToken(user.getToken());
         responseCreateUser.setLastLogin(user.getLastLogin());
         return new ResponseEntity<>(responseCreateUser,HttpStatus.CREATED);
     }
