@@ -4,6 +4,8 @@
 Ejercicio de desarrollo de api rest 
 creacion de usuario y generacion de token jwt
 
+Nota: los diagramas se encuentran en la carpeta src/main/resources
+
  Creación de proyectos Java con Gradle
 
 ##### Esta guía lo guiará a través del uso de Gradle para construir un proyecto Java simple.
@@ -90,6 +92,8 @@ Ahora debemos realizar lo siguiente(si existe gradle.build saltar al siguiente p
 <==========---> 80% EXECUTING [17m 37s]
 > :bootRun
 ```
+
+
 
 
 
