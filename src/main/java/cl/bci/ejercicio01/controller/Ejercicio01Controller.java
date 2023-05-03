@@ -25,10 +25,13 @@ public class Ejercicio01Controller {
     public @ResponseBody ResponseEntity<ResponseCreateUser>  create(@Valid @RequestBody Ejercicio01Request request) throws Exception {
         ResponseCreateUser responseCreateUser = new ResponseCreateUser();
         User user = service.createUser(request);
+        responseCreateUser.setName(user.getName());
+        responseCreateUser.setEmail(user.getEmail());
         responseCreateUser.setCreated(user.getCreated());
         responseCreateUser.setId(user.getId().toString());
         responseCreateUser.setToken(user.getToken());
         responseCreateUser.setLastLogin(user.getLastLogin());
+        responseCreateUser.setActive(user.isActive());
         return new ResponseEntity<>(responseCreateUser,HttpStatus.CREATED);
     }
 }

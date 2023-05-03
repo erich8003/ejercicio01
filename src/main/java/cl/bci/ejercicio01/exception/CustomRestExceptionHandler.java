@@ -38,8 +38,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
 
-        ApiError apiError =
-                new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors, new Date());
+        Error apiError =
+                new Error(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors, new Date());
         return handleExceptionInternal(
                 ex, apiError, headers, apiError.getCodigo(), request);
     }
@@ -50,8 +50,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
         String error = ex.getParameterName() + " parameter is missing";
 
-        ApiError apiError =
-                new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error, new Date());
+        Error apiError =
+                new Error(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error, new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());
     }
@@ -65,8 +65,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                     violation.getPropertyPath() + ": " + violation.getMessage());
         }
 
-        ApiError apiError =
-                new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors, new Date());
+        Error apiError =
+                new Error(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors, new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());
     }
@@ -76,8 +76,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
             DuplicatedUserException ex, WebRequest request) {
         List<String> errors = new ArrayList<String>();
 
-        ApiError apiError =
-                new ApiError(HttpStatus.CONFLICT, ex.getLocalizedMessage(), errors, new Date());
+        Error apiError =
+                new Error(HttpStatus.CONFLICT, ex.getLocalizedMessage(), errors, new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());
     }
@@ -88,8 +88,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         String error =
                 ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-        ApiError apiError =
-                new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error, new Date());
+        Error apiError =
+                new Error(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error, new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());
     }
@@ -106,7 +106,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 " method is not supported for this request. Supported methods are ");
         ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
 
-        ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED,
+        Error apiError = new Error(HttpStatus.METHOD_NOT_ALLOWED,
                 ex.getLocalizedMessage(), builder.toString(), new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());
@@ -115,7 +115,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-        ApiError apiError = new ApiError(
+        Error apiError = new Error(
                 HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred", new Date());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getCodigo());

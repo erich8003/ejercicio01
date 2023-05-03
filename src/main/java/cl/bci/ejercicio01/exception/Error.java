@@ -1,5 +1,6 @@
 package cl.bci.ejercicio01.exception;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.http.HttpStatus;
 
@@ -8,18 +9,18 @@ import java.util.Date;
 import java.util.List;
 
 @JsonTypeInfo(include= JsonTypeInfo.As.WRAPPER_OBJECT, use= JsonTypeInfo.Id.NAME)
-public class ApiError {
+public class Error {
 
 
     private Date timestamp;
 
     private HttpStatus codigo;
     private String detail;
-
+    @JsonIgnore
     private List<String> errors;
     
 
-    public ApiError(HttpStatus status, String message, List<String> errors, Date timestamp) {
+    public Error(HttpStatus status, String message, List<String> errors, Date timestamp) {
         super();
         this.codigo = status;
         this.detail = message;
@@ -27,7 +28,7 @@ public class ApiError {
         this.timestamp = timestamp;
     }
 
-    public ApiError(HttpStatus status, String message, String error, Date timestamp) {
+    public Error(HttpStatus status, String message, String error, Date timestamp) {
         super();
         this.codigo = status;
         this.detail = message;
